@@ -1,0 +1,99 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define all(x) x.begin(),x.end()
+#define int long long
+#define ll long long
+#define endl "\n"
+#define yes cout<<"Yes"<<endl;
+#define no cout<<"No"<<endl;
+#define Chaos ios::sync_with_stdio(false);cin.tie(0);cout.tie(0)
+#define pb push_back
+#define pp pop_back()
+#define vtr vector<int>
+#define sz size()
+#define ff first
+#define ss second
+#define fncc (auto valid =[&] (int x) -> bool { };)
+#define vout(a) for(auto x:a)cout<<x<<' ';
+
+void A_Fractal()
+{
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt","r",stdin);
+    freopen("output.txt","w",stdout);
+    #endif
+}
+vector<int>adj[2000119];
+int vis[2000119];
+int d;
+void dfs(int source,int parent)
+{
+    vis[source]=1;
+    for(auto child :adj[source])
+    {
+        if(child==parent)
+        {
+            continue;
+        }
+        if(vis[child]==0)
+        {
+            dfs(child,source);
+        }
+        else if(vis[child]==1)
+        {
+            d=1;
+        }
+    }
+    vis[source]=2;
+    
+}
+void Follow_The_Leader()
+{
+
+    int n;cin>>n;
+    for(int i=0;i<=n;i++)
+    {
+        adj[i].clear();
+        vis[i]=false;
+    }
+    vtr arr(n);
+    for(int i=1;i<=n;i++)
+    {
+        int x;
+        cin>>x;
+        adj[i].push_back(x);
+        adj[x].push_back(i);
+    }
+    int mx=0,mn=0;
+    for(int i=1;i<n;i++)
+    {
+        if(!vis[i])
+        {
+            
+            mx++;
+            d=0;
+            dfs(i,-1);
+            if(d==1)
+            {
+                mn++;
+            }
+        }
+    }
+    if(mn<mx)mn+=1;
+    cout<<mn<<" "<<mx<<endl;
+
+}
+signed main()
+{
+    A_Fractal();
+    Chaos;
+    int __;
+    cin>>__;
+    for(; __--; )
+    {
+    //     //cout<<"Case "<<i<<": ";
+        Follow_The_Leader();
+    }
+    return 0;
+}
+
